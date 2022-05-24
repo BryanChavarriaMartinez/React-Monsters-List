@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import logo from './logo.svg';
+import CardList from './components/card-list/card-list.component';
+import SearchBox from './components/search-box/search-box.component';
 import './App.css';
-import { render } from '@testing-library/react';
 
 class App extends Component {
   // Step 1: Our constructor runs first, our State gets initialized.
@@ -29,33 +29,28 @@ class App extends Component {
     ));
   }
 
+  // Step 2.1: Method to not unnecessarily rendering of extra anonymous functions whenever the render call is being called.
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLocaleLowerCase();
+    this.setState(() => { 
+      return { searchField }; 
+    });
+  };
+
   // Step 2: The initial rendering and mounting of our component on to the page.
   render() {
-    const filteredMonsters = this.state.monsters.filter((monster) => {
-      return monster.name.toLocaleLowerCase().includes(this.state.searchField);
+    // console.log('render from AppJS');
+    // We declare the states as variables, so we dont write "this.state" every time.
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+    const filteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLocaleLowerCase().includes(searchField);
     });
 
     return (
       <div className="App">
-        <input 
-          className='search-box' 
-          type='search' 
-          placeholder='Search Monsters' 
-          onChange={(event) => {
-            const searchField = event.target.value.toLocaleLowerCase();
-            this.setState(() => {
-              return { searchField };
-            })
-          }} 
-        />
-
-        {filteredMonsters.map((monster) => {
-          return (
-            <div key={monster.id}>
-              <h1>{monster.name}</h1>
-            </div>
-          );
-        })}
+        <SearchBox className='monsters-search-box' onChangeHandler={onSearchChange} placeholder='Search Monsters' />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
