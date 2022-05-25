@@ -1,9 +1,30 @@
-import { Component } from 'react';
+//import { Component } from 'react'; //This is our Class component
+import { useState } from 'react';
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
 import './App.css';
 
-class App extends Component {
+const App = () => {
+
+  const [searchField, setSearchField] = useState(''); // [value, setValue]
+  
+  const onSearchChange = (event) => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+    setSearchField(searchFieldString);
+  };
+
+  return (
+    <div className="App">
+      <h1 className='app-title'>Monsters Rolodex</h1>
+      <SearchBox className='monsters-search-box' onChangeHandler={onSearchChange} placeholder='Search Monsters' />
+      <CardList monsters={filteredMonsters} />
+    </div>
+  );
+};
+
+export default App;
+
+/*class App extends Component {
   // Step 1: Our constructor runs first, our State gets initialized.
   constructor() {
     super();
@@ -56,5 +77,4 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+export default App; */
