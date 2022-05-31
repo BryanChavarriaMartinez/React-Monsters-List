@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+# Getting Started React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Program to filters monsters in a list, part of my React course.
+First project in React to improve my skills.
 
 ## Available Scripts
 
